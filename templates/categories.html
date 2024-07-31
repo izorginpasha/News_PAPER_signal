@@ -1,0 +1,35 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}!
+{# Импортируем модуль с нашим тегом #}
+{% load custom_tags %}
+<!-- Название у нас будет products -->
+{% block title %}
+Catigories
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим все товары -->
+{% block content %}
+<h1>Категории</h1>
+
+<hr>
+
+
+{# Информация о следующих страницах #}
+{% if categories %}
+{% for category in categories %}
+<i>{{category.category}}</i>
+{% if request.user not in category.subscribers.all %}
+<button><a href="/categories/{{category.id}}/subscribers"> Подписаться</a></button>
+{% else %}
+<button><a href="/categories/{{category.id}}/unsubscribers"> Отписаться</a></button>
+{% endif %}
+
+<hr>
+{% endfor %}
+{% endif %}
+<!--{% if is_not_premium %}-->
+<!--<button> <a href="news/upgrade/"> Стать автором</a> </button>-->
+<!--{% endif %}-->
+<!--<button> <a href="accounts/">Выйти</a> </button>-->
+{% endblock content %}
